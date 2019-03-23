@@ -40,12 +40,15 @@ class CreateBox extends Command
      */
     public function handle()
     {
+        // Initiate the box helper
+        $helper = new BoxHelper();
+        // First creates the Box folder in app, if it doesn't exist
+        $helper->createDirectory('app/Box');
+
         // First convert the first letter of box to upper case
         $box_name = Str::ucfirst($this->argument('box_name'));
         $root_path = 'app/Box/';
         $box_path = $root_path . $box_name;
-
-        $helper = new BoxHelper();
 
         try {
             $box_created = $helper->createDirectory($box_path);
