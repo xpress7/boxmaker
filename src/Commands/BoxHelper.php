@@ -252,15 +252,20 @@ class BoxHelper
      * */
     public function createDatabase($box_name)
     {
-        // First we will convert the box_name to lower case, and add plural
+        // We will convert the box_name to lower case, and add plural
         $table_name = Str::plural(Str::lower($box_name));
 
         $box_database_path = 'app/Box/' . $box_name . '/Database/';
+        $box_migrations_path = 'app/Box/' . $box_name . '/Database/migrations';
         $datbase_file_name = 'create_' . $table_name . '_table.php';
 
         try {
-            if (!File::exists($box_database_path . $datbase_file_name)) {
-                $this->createDirectory($box_database_path);
+            // First we will create Database folder, if it doesn't exist
+            $this->createDirectory($box_database_path);
+
+            // We will check if the database file exists
+            if (!File::exists($box_migrations_path . $datbase_file_name)) {
+                $this->createDirectory($box_migrations_path);
 
                 // first we create a temp string, for first change
                 $database_template_temp = str_replace(
@@ -275,7 +280,7 @@ class BoxHelper
                     $database_template_temp
                 );
 
-                $database_file_created = $this->createFile($box_database_path . $datbase_file_name, $database_template);
+                $database_file_created = $this->createFile($box_migrations_path . $datbase_file_name, $database_template);
                 if ($database_file_created) {
                     $this->output->writeln($datbase_file_name . " file created");
                 }
