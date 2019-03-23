@@ -52,13 +52,8 @@ class CreateBox extends Command
 
         try {
             $box_created = $helper->createDirectory($box_path);
-            if ($box_created) {
-                // This will display the result text on terminal
-                $this->info('Box Created Successfully');
-            }
-
             // Create Controller
-            $helper->createController($box_name, $box_name.'Controller');
+            $helper->createController($box_name, $box_name . 'Controller');
             // Create Model
 //            $this->createModel($box_name);
             $helper->createModel($box_name, $box_name);
@@ -66,10 +61,15 @@ class CreateBox extends Command
             $helper->createTransformer($box_name);
             // Create routes folder
             $helper->createRoutes($box_name);
-            // Create database directory
-            $helper->createDirectory($box_path . '/Database/');
+            // Create database
+            $helper->createDatabase($box_name);
             // Create Service Provider, Register the service provider in config/app.php file
             $helper->createProvider($box_name);
+
+            if ($box_created) {
+                // This will display the result text on terminal
+                $this->info('Box Created Successfully');
+            }
 
         } catch (\Exception $exception) {
             return $exception;
