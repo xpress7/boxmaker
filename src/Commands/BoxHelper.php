@@ -5,6 +5,7 @@ namespace Xpress7\BoxMaker\Commands;
 use File;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Artisan;
 
 class BoxHelper
 {
