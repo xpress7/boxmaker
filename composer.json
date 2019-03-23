@@ -11,7 +11,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "xpress7\\BoxMaker\\": "src/"
+            "Xpress7\\BoxMaker\\": "src/"
         }
     },
     "extra": {
