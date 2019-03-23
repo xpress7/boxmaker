@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Box\{{box_name}}\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +22,7 @@ class {{box_name}}ServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/../Routes/api.stub');
+        $this->loadRoutesFrom(__DIR__.'/../Routes/api.php');
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
     }
 }
