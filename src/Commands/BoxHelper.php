@@ -260,8 +260,8 @@ class BoxHelper
 
         try {
             // First we will create Database folder, if it doesn't exist
-            $this->createDirectory($box_database_path);
-            $this->createDirectory($box_migrations_path);
+//            $this->createDirectory($box_database_path);
+//            $this->createDirectory($box_migrations_path);
             Artisan::call('make:migration', ['name' => $migration_name]);
             $this->output->writeln(Artisan::output());
 //            File::move();
