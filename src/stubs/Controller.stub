@@ -3,6 +3,7 @@
 namespace App\Box\{{box_name}}\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class {{box_name}}Controller extends Controller
 {
