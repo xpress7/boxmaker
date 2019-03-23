@@ -174,7 +174,6 @@ class BoxHelper
         );
 
 
-
         $this->createFile($routes_path . 'api.php', $api_template);
         $this->createFile($routes_path . 'web.php', '<?php // Place web routes here');
     }
@@ -257,36 +256,15 @@ class BoxHelper
 
         $box_database_path = 'app/Box/' . $box_name . '/Database/';
         $box_migrations_path = 'app/Box/' . $box_name . '/Database/migrations/';
-        $datbase_file_name = 'create_' . $table_name . '_table.php';
+        $migration_name = 'create_'.$table_name.'_table';
 
         try {
             // First we will create Database folder, if it doesn't exist
             $this->createDirectory($box_database_path);
-
-            // We will check if the database file exists
-            if (!File::exists($box_migrations_path . $datbase_file_name)) {
-                $this->createDirectory($box_migrations_path);
-
-                // first we create a temp string, for first change
-                $database_template_temp = str_replace(
-                    ['{{box_name}}'],
-                    [$box_name],
-                    $this->getStub('database')
-                );
-
-                $database_template = str_replace(
-                    ['{{table_name}}'],
-                    [$table_name],
-                    $database_template_temp
-                );
-
-                $database_file_created = $this->createFile($box_migrations_path . $datbase_file_name, $database_template);
-                if ($database_file_created) {
-                    $this->output->writeln($datbase_file_name . " file created");
-                }
-            } else {
-                $this->output->writeln($datbase_file_name . ' already exists');
-            }
+            $this->createDirectory($box_migrations_path);
+            Artisan::call('make:migration', ['name' => $migration_name]);
+            $this->output->writeln(Artisan::output());
+//            File::move();
         } catch (\Exception $exception) {
             $this->output->writeln($exception);
         }
