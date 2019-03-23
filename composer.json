@@ -1,0 +1,22 @@
+{
+    "name": "xpress7/boxmaker",
+    "description": "Create Box Structure for easy api management",
+    "authors": [
+        {
+            "name": "Muralidhar Ch",
+            "email": "connect.xpress@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "xpress7\\BoxMaker\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers":["Xpress7\\BoxMaker\\BoxMakerServiceProvider"]
+        }
+    }
+}

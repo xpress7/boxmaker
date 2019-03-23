@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Box\{{box_name}}\Transformers;
+
+use League\Fractal\TransformerAbstract;
+
+class {{box_name}}Transformer extends TransformerAbstract
+{
+    /**
+     * A Fractal transformer.
+     *
+     * @return array
+     */
+    public function transform()
+    {
+        return [
+            //
+        ];
+    }
+}

@@ -1,0 +1,28 @@
+<?php
+
+
+use Illuminate\Support\ServiceProvider;
+
+class {{box_name}}ServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->loadRoutesFrom(__DIR__.'/../Routes/api.stub');
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+    }
+}

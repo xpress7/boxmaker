@@ -1,0 +1,6 @@
+<?php
+
+// Box routes here
+Route::apiResources([
+    '{{route_name}}' =>'App\Box\{{box_name}}\{{box_name}}Controller',
+]);
