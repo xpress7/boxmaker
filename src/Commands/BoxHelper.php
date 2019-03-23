@@ -256,7 +256,7 @@ class BoxHelper
         $table_name = Str::plural(Str::lower($box_name));
 
         $box_database_path = 'app/Box/' . $box_name . '/Database/';
-        $box_migrations_path = 'app/Box/' . $box_name . '/Database/migrations';
+        $box_migrations_path = 'app/Box/' . $box_name . '/Database/migrations/';
         $datbase_file_name = 'create_' . $table_name . '_table.php';
 
         try {
