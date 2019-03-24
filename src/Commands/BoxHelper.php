@@ -271,4 +271,40 @@ class BoxHelper
         }
 
     }
+
+
+    /*
+     * Creates Requests folder and Request stub
+     * */
+    public function createRequest($box_name, $request_name){
+        $box_requests_path = 'app/Box/'.$box_name.'/Requests/';
+        $request_file_name = $request_name.'.php';
+
+        try {
+            if (!File::exists($box_requests_path . $request_file_name)) {
+                $this->createDirectory($box_requests_path);
+
+                $request_template_temp = str_replace(
+                    ['{{box_name}}'],
+                    [$box_name],
+                    $this->getStub('Request')
+                );
+
+                $request_template = str_replace(
+                    ['{{request_name}}'],
+                    [$request_name],
+                    $request_template_temp
+                );
+
+                $request_created = $this->createFile($box_requests_path . $request_file_name, $request_template);
+                if ($request_created) {
+                    $this->output->writeln($request_file_name . " Created");
+                }
+            } else {
+                $this->output->writeln($request_file_name . ' already exists');
+            }
+        } catch (\Exception $exception) {
+            $this->output->writeln($exception);
+        }
+    }
 }

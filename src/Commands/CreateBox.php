@@ -65,6 +65,8 @@ class CreateBox extends Command
             $helper->createDatabase($box_name);
             // Create Service Provider, Register the service provider in config/app.php file
             $helper->createProvider($box_name);
+            // Creates Request folder and create request file
+            $helper->createRequest($box_name, 'Create'.$box_name.'Request');
 
             if ($box_created) {
                 // This will display the result text on terminal
