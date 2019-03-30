@@ -18,7 +18,7 @@ class BoxHelper
     public function __construct()
     {
         $this->output = new ConsoleOutput();
-        $this->base_path = 'api/Box/';
+        $this->base_path = 'app/Box/';
     }
 
 
@@ -29,7 +29,7 @@ class BoxHelper
         $box_name = Str::ucfirst($box_name);
         $model_name = Str::ucfirst($model_name);
 
-        $box_model_path = 'app/Box/' . $box_name . '/Models/';
+        $box_model_path = $this->base_path . $box_name . '/Models/';
         $model_file_name = $model_name . '.php';
 
         try {
@@ -57,67 +57,15 @@ class BoxHelper
 
 
     /*
-     * This function creates a new Directory
-     * First it will check whether the directory exists or not
-     * */
-
-    public function createDirectory($path)
-    {
-        if (!File::exists($path)) {
-            try {
-                $created = File::makeDirectory($path);
-                if ($created) {
-                    $this->output->writeln($path . ' Created');
-                }
-                return $created;
-            } catch (\Exception $exception) {
-                return $this->output->writeln($exception);
-            }
-        } else {
-            return $this->output->writeln($path . ' already exists');
-        }
-    }
-
-
-    /*
-     * Gets the stub file
-     * */
-
-    protected function getStub($type)
-    {
-        return File::get(__DIR__ . '/../stubs/' . $type . '.stub');
-    }
-
-
-    /*
-     * Creates A new file, first checks if the file exist
-     * @return void
-     * */
-
-    public function createFile($path, $content)
-    {
-        if (!File::exists($path)) {
-            try {
-                $created = File::put($path, $content);
-                if ($created) {
-                    $this->output->writeln($path . ' Created');
-                }
-            } catch (\Exception $exception) {
-                $this->output->writeln($exception);
-            }
-        } else {
-            $this->output->writeln($path . 'file already exists');
-        }
-    }
-
-
-    /*
      * This function creates a controller
      *
      * */
 
     public function createController($box_name)
     {
+        //$this->output->writeln($this->base_path);
+        //dd("in controller");
+        $box_name = Str::ucfirst($box_name);
         try {
             $box_path = $this->base_path . $box_name;
             // path for the controllers folder in the box
@@ -190,7 +138,7 @@ class BoxHelper
     {
         $route_name = Str::plural(Str::lower($box_name));
 
-        $routes_path = 'app/Box/' . $box_name . '/Routes/';
+        $routes_path = $this->base_path . $box_name . '/Routes/';
         $this->createDirectory($routes_path);
 
         $api_template_temp = str_replace(
@@ -217,7 +165,7 @@ class BoxHelper
 
     public function createProvider($box_name)
     {
-        $box_providers_path = 'app/Box/' . $box_name . '/Providers/';
+        $box_providers_path = $this->base_path . $box_name . '/Providers/';
         $provider_name = $box_name . 'ServiceProvider';
         $provider_file = $box_name . 'ServiceProvider.php';
 
@@ -251,7 +199,7 @@ class BoxHelper
 
     public function createTransformer($box_name)
     {
-        $box_transformer_path = 'app/Box/' . $box_name . '/Transformers/';
+        $box_transformer_path = $this->base_path . $box_name . '/Transformers/';
         $transformer_name = $box_name . 'Transformer';
         $transformer_file_name = $box_name . 'Transformer.php';
 
@@ -286,8 +234,8 @@ class BoxHelper
         // We will convert the box_name to lower case, and add plural
         $table_name = Str::plural(Str::lower($box_name));
 
-        $box_database_path = 'app/Box/' . $box_name . '/Database/';
-        $box_migrations_path = 'app/Box/' . $box_name . '/Database/migrations/';
+        $box_database_path = $this->base_path . $box_name . '/Database/';
+        $box_migrations_path = $this->base_path . $box_name . '/Database/migrations/';
         $migration_name = 'create_' . $table_name . '_table';
 
         try {
@@ -309,7 +257,7 @@ class BoxHelper
      * */
     public function createRequest($box_name, $request_name)
     {
-        $box_requests_path = 'app/Box/' . $box_name . '/Requests/';
+        $box_requests_path = $this->base_path . $box_name . '/Requests/';
         $request_file_name = $request_name . '.php';
 
         try {
@@ -337,6 +285,62 @@ class BoxHelper
             }
         } catch (\Exception $exception) {
             $this->output->writeln($exception);
+        }
+    }
+
+
+
+    /*
+     * This function creates a new Directory
+     * First it will check whether the directory exists or not
+     * */
+
+    public function createDirectory($path)
+    {
+        if (!File::exists($path)) {
+            try {
+                $created = File::makeDirectory($path);
+                if ($created) {
+                    $this->output->writeln($path . ' Created');
+                }
+                return $created;
+            } catch (\Exception $exception) {
+                return $this->output->writeln($exception);
+            }
+        } else {
+            return $this->output->writeln($path . ' already exists');
+        }
+    }
+
+
+    /*
+     * Gets the stub file
+     * */
+
+    protected function getStub($type)
+    {
+        return File::get(__DIR__ . '/../stubs/' . $type . '.stub');
+    }
+
+
+    /*
+     * Creates A new file, first checks if the file exist
+     * @return void
+     * */
+
+    public function createFile($path, $content)
+    {
+        if (!File::exists($path)) {
+            try {
+                $created = File::put($path, $content);
+                if ($created) {
+                    $this->output->writeln($path . ' Created');
+                }
+            } catch (\Exception $exception) {
+                $this->output->writeln($exception);
+            }
+        } else {
+            $this->output->writeln($path . 'file already exists');
         }
     }
 }
