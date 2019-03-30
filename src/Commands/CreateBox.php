@@ -53,7 +53,7 @@ class CreateBox extends Command
         try {
             $box_created = $helper->createDirectory($box_path);
             // Create Controller
-            $helper->createController($box_name, $box_name . 'Controller');
+            $helper->createController($box_name);
             // Create Model
 //            $this->createModel($box_name);
             $helper->createModel($box_name, $box_name);

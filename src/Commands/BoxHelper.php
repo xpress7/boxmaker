@@ -18,6 +18,7 @@ class BoxHelper
     public function __construct()
     {
         $this->output = new ConsoleOutput();
+        $this->base_path = 'api/Box/';
     }
 
 
@@ -115,38 +116,68 @@ class BoxHelper
      *
      * */
 
-    public function createController($box_name, $controller_name)
+    public function createController($box_name)
     {
         try {
+            $box_path = $this->base_path . $box_name;
             // path for the controllers folder in the box
-            $box_controller_path = 'app/Box/' . $box_name . '/Controllers/';
-            // name of the controller
+            $box_controller_path = $box_path . '/Controllers/';
             $controller_name = $box_name . 'Controller';
-            // name of the controller file
-            $controller_file = $box_name . 'Controller.php';
-            // Since we can't directly create a file in box , for now moving the controller to box
-            // Checking whether the file already exists
-            if (!File::exists($box_controller_path . $controller_file)) {
-                // Check whether a the directory exist, if not, we create one
-                $this->createDirectory($box_controller_path);
+            // Now creating Controllers directoruy
+            $this->createDirectory($box_controller_path);
 
-                // This will replace the controllername in stub file, with our box_name
-                $controller_template = str_replace(
-                    ['{{box_name}}'],
-                    [$box_name],
-                    $this->getStub('Controller')
-                );
+            // Creating Api Controller.
+            $this->createControllerFile($box_name, $controller_name, 'API' );
+            // Creating Web Controller.
+            $this->createControllerFile($box_name, $controller_name, 'Web' );
 
-                $controller_created = $this->createFile($box_controller_path . $controller_file, $controller_template);;
-                if ($controller_created) {
-                    $this->output->writeln($controller_name . ' Created');
-                }
-            } else {
-                $this->output->writeln($controller_name . ' already exists');
-            }
 
         } catch (\Exception $exception) {
             $this->output->writeln($exception);
+        }
+    }
+
+
+    /*
+     * This function creates the controller files
+     * This will take 3 arguments. Box Name, Controller Name, and Route.
+     * Route is Either API or Web
+     * */
+    public function createControllerFile($box_name, $controller_name, $route)
+    {
+        $route = Str::upper($route);
+        $box_controller_path = $this->base_path.$box_name . '/Controllers/';
+        // Route is Web or API
+        $route_controller_path = $box_controller_path.$route.'/';
+
+        // name of the  controller
+        $controller_name = $controller_name;
+        // name of the controller file
+        $controller_file = $controller_name. '.php';
+
+        if (!File::exists($route_controller_path . $controller_file)) {
+            // We create Route controller path, if it doesn't exist
+            $this->createDirectory($route_controller_path);
+
+            // This will replace the controllername in stub file, with our box_name
+            $controller_template_temp = str_replace(
+                ['{{box_name}}'],
+                [$box_name],
+                $this->getStub('Controller')
+            );
+
+            $controller_template = str_replace(
+                ['{{route}}'],
+                [$route],
+                $controller_template_temp
+            );
+
+            $controller_created = $this->createFile($route_controller_path . $controller_file, $controller_template);;
+            if ($controller_created) {
+                $this->output->writeln($controller_name . ' Created');
+            }
+        } else {
+            $this->output->writeln($controller_name . ' already exists');
         }
     }
 
@@ -257,7 +288,7 @@ class BoxHelper
 
         $box_database_path = 'app/Box/' . $box_name . '/Database/';
         $box_migrations_path = 'app/Box/' . $box_name . '/Database/migrations/';
-        $migration_name = 'create_'.$table_name.'_table';
+        $migration_name = 'create_' . $table_name . '_table';
 
         try {
             // First we will create Database folder, if it doesn't exist
@@ -276,9 +307,10 @@ class BoxHelper
     /*
      * Creates Requests folder and Request stub
      * */
-    public function createRequest($box_name, $request_name){
-        $box_requests_path = 'app/Box/'.$box_name.'/Requests/';
-        $request_file_name = $request_name.'.php';
+    public function createRequest($box_name, $request_name)
+    {
+        $box_requests_path = 'app/Box/' . $box_name . '/Requests/';
+        $request_file_name = $request_name . '.php';
 
         try {
             if (!File::exists($box_requests_path . $request_file_name)) {
