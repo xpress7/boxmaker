@@ -37,11 +37,18 @@ class BoxHelper
                 $this->createDirectory($box_model_path);
 
                 // This will replace the ModelName in stub file, with our model_name
-                $modelTemplate = str_replace(
-                    ['ModelName'],
+                $model_template_temp = str_replace(
+                    ['{{box_name}}'],
                     [$box_name],
                     $this->getStub('Model')
                 );
+
+                $controller_template = str_replace(
+                    ['{{model_name}}'],
+                    [$model_name],
+                    $model_template_temp
+                );
+
 
                 $model_created = $this->createFile($box_model_path . $model_file_name, $modelTemplate);
                 if ($model_created) {
