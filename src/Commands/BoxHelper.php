@@ -204,28 +204,34 @@ class BoxHelper
      * This fucntion creates transformer
      * */
 
-    public function createTransformer($box_name)
+    public function createResource($box_name)
     {
-        $box_transformer_path = $this->base_path . $box_name . '/Transformers/';
-        $transformer_name = $box_name . 'Transformer';
-        $transformer_file_name = $box_name . 'Transformer.php';
+        $box_resource_path = $this->base_path . $box_name . '/Resources/';
+        $resouce_name = $box_name . 'Resource';
+        $resource_file_name = $resouce_name . '.php';
 
         try {
-            if (!File::exists($box_transformer_path . $transformer_file_name)) {
-                $this->createDirectory($box_transformer_path);
+            if (!File::exists($box_resource_path . $resource_file_name)) {
+                $this->createDirectory($box_resource_path);
 
-                $transformer_template = str_replace(
+                $resource_temp = str_replace(
                     ['{{box_name}}'],
                     [$box_name],
-                    $this->getStub('Transformer')
+                    $this->getStub('Resource')
                 );
 
-                $transformer_created = $this->createFile($box_transformer_path . $transformer_file_name, $transformer_template);
-                if ($transformer_created) {
-                    $this->output->writeln($transformer_file_name . " Created");
+                $resouce_template = str_replace(
+                    ['{{resouce_name}}'],
+                    [$resouce_name],
+                    $resource_temp
+                );
+
+                $resource_created = $this->createFile($box_resource_path . $resource_file_name, $resouce_template);
+                if ($resource_created) {
+                    $this->output->writeln($resource_file_name . " Created");
                 }
             } else {
-                $this->output->writeln($transformer_name . ' already exists');
+                $this->output->writeln($resource_file_name . ' already exists');
             }
         } catch (\Exception $exception) {
             $this->output->writeln($exception);

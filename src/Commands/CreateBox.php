@@ -57,8 +57,8 @@ class CreateBox extends Command
             // Create Model
 //            $this->createModel($box_name);
             $helper->createModel($box_name, $box_name);
-            // Create Transformer
-            $helper->createTransformer($box_name);
+            // Create Resource
+            $helper->createResource($box_name);
             // Create routes folder
             $helper->createRoutes($box_name);
             // Create database
