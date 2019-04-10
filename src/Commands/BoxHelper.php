@@ -43,14 +43,14 @@ class BoxHelper
                     $this->getStub('Model')
                 );
 
-                $controller_template = str_replace(
+                $model_template = str_replace(
                     ['{{model_name}}'],
                     [$model_name],
                     $model_template_temp
                 );
 
 
-                $model_created = $this->createFile($box_model_path . $model_file_name, $modelTemplate);
+                $model_created = $this->createFile($box_model_path . $model_file_name, $model_template);
                 if ($model_created) {
                     $this->output->writeln('Model Created Successfully');
                 }
@@ -201,7 +201,7 @@ class BoxHelper
 
 
     /*
-     * This fucntion creates transformer
+     * This fucntion creates Resource for api
      * */
 
     public function createResource($box_name)
