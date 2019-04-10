@@ -221,7 +221,7 @@ class BoxHelper
                 );
 
                 $resouce_template = str_replace(
-                    ['{{resouce_name}}'],
+                    ['{{resource_name}}'],
                     [$resouce_name],
                     $resource_temp
                 );
