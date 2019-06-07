@@ -2,5 +2,5 @@
 
 // Box routes here
 Route::apiResources([
-    '{{route_name}}' =>'App\Box\{{box_name}}\Controllers\{{box_name}}Controller',
+    '{{route_name}}' =>'App\Box\{{box_name}}\Controllers\API\{{box_name}}Controller',
 ]);
